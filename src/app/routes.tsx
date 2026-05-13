@@ -12,6 +12,7 @@ import { PDFAccessibility } from "./pages/projects/PDFAccessibility";
 import { AdminLogin } from "./pages/admin/Login";
 import { AdminDashboard } from "./pages/admin/Dashboard";
 import { AdminSetup } from "./pages/admin/Setup";
+import { Partners } from "./pages/Partners";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
     Component: Root,
     children: [
       { index: true, Component: Home },
+      { path: "partners", Component: Partners },
       { path: "projects/bill-tracker", Component: BillTracker },
       { path: "projects/presidential-suite", Component: PresidentialSuite },
       { path: "projects/pdf-accessibility", Component: PDFAccessibility },

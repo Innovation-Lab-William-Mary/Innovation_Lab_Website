@@ -24,11 +24,11 @@ export function Footer() {
           <div>
             <h4 className="text-lg font-semibold text-[#F0B323] mb-6">Explore</h4>
             <ul className="space-y-3">
-              <li><a href="#about" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">About the Lab</a></li>
-              <li><a href="#projects" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Project Portfolio</a></li>
-              <li><a href="#programs" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Get Involved</a></li>
-              <li><a href="#news" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">News & Updates</a></li>
-              <li><a href="#events" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Events</a></li>
+              <li><a href="/#about" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">About the Lab</a></li>
+              <li><a href="/#projects" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Project Portfolio</a></li>
+              <li><a href="/#programs" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Get Involved</a></li>
+              <li><a href="/#news" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">News & Updates</a></li>
+              <li><a href="/#events" className="text-[#A5B8B0] hover:text-white transition-colors text-sm">Events</a></li>
             </ul>
           </div>
 

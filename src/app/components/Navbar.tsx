@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import logo from "../../imports/WM_Logo_Horizontal_Green_Gold.png";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -20,6 +21,9 @@ export function Navbar() {
     { name: "About", path: "#about" },
     { name: "Projects", path: "#projects" },
     { name: "Programs", path: "#programs" },
+  ];
+
+  const moreLinks = [
     { name: "News", path: "#news" },
     { name: "Events", path: "#events" },
   ];
@@ -55,7 +59,7 @@ export function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                to={`/${link.path}`}
+                to={link.path.startsWith('#') ? `/${link.path}` : link.path}
                 className={`text-sm font-medium transition-colors hover:text-[#F0B323] ${
                   isScrolled ? "text-slate-600" : "text-slate-200"
                 }`}
@@ -63,6 +67,36 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
+
+            {/* More Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onBlur={() => setTimeout(() => setDropdownOpen(false), 200)}
+                className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-[#F0B323] ${
+                  isScrolled ? "text-slate-600" : "text-slate-200"
+                }`}
+              >
+                <span>More</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-sm shadow-lg border border-slate-200 py-2 z-50">
+                  {moreLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.path.startsWith('#') ? `/${link.path}` : link.path}
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-[#115740] transition-colors"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Link
               to="/#join"
               className={`px-4 py-2 rounded-sm text-sm font-bold transition-transform hover:scale-105 ${
@@ -100,7 +134,17 @@ export function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                to={`/${link.path}`}
+                to={link.path.startsWith('#') ? `/${link.path}` : link.path}
+                className="block px-3 py-3 rounded-sm text-base font-medium text-slate-800 hover:bg-slate-50 hover:text-[#115740]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+            {moreLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path.startsWith('#') ? `/${link.path}` : link.path}
                 className="block px-3 py-3 rounded-sm text-base font-medium text-slate-800 hover:bg-slate-50 hover:text-[#115740]"
                 onClick={() => setMobileMenuOpen(false)}
               >

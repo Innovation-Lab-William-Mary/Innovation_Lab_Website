@@ -1,6 +1,10 @@
 import image_image__4_ from '@/imports/image__4_.jpg'
+import kathleenPowell from '@/imports/kathleen-powell.png'
+import dougSchmidt from '@/imports/schmidt-doug.jpg'
+import grahamHenshaw from '@/imports/henshaw-g-1.jpg'
+import edPrimary from '@/imports/ed-primary.jpg'
 import { motion } from "motion/react";
-import { ArrowRight, ChevronRight, Zap, Target, Users, Wrench, Lightbulb, Code, Calendar } from "lucide-react";
+import { ArrowRight, ChevronRight, Zap, Target, Users, Wrench, Lightbulb, Code, Calendar, Handshake } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { SuggestionWidget } from "../components/SuggestionWidget";
 import { Link } from "react-router";
@@ -235,8 +239,74 @@ export function Home() {
         </div>
       </section>
 
-      {/* 4. Current Projects */}
-      <section id="projects" className="py-24 bg-white">
+      {/* 4. Our Partners */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Handshake className="w-8 h-8 text-[#F0B323]" />
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                Our Partners
+              </h2>
+            </div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              We collaborate with key organizations across William & Mary to deliver exceptional experiential learning opportunities
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Tribe Careers",
+                logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=400&h=200&fit=crop",
+                description: "Career development and job placement services",
+                url: "https://wm-csm.symplicity.com/students/?signin_tab=0"
+              },
+              {
+                name: "W&M IT",
+                logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop",
+                description: "Information Technology Services",
+                url: "https://www.wm.edu/offices/it/"
+              },
+              {
+                name: "Entrepreneurship Hub",
+                logo: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=200&fit=crop",
+                description: "Fostering innovation and entrepreneurial thinking",
+                url: "https://www.wm.edu/offices/entrepreneurship/"
+              }
+            ].map((partner, i) => (
+              <a
+                key={i}
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="bg-white rounded-sm border-2 border-slate-100 p-8 hover:border-[#F0B323] hover:shadow-lg transition-all h-full"
+                >
+                  <div className="aspect-video bg-slate-100 rounded-sm overflow-hidden mb-6">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{partner.name}</h3>
+                  <p className="text-sm text-slate-600">{partner.description}</p>
+                </motion.div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Current Projects */}
+      <section id="projects" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-[#115740] font-bold tracking-wider uppercase text-sm mb-3">Project Portfolio</h2>
@@ -292,71 +362,65 @@ export function Home() {
         </div>
       </section>
 
-      {/* 6. Get Involved */}
-      <section id="programs" className="py-24 bg-[#115740] text-white">
+      {/* 6. Advisory Board */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-            <div className="max-w-2xl">
-              <h2 className="text-[#F0B323] font-bold tracking-wider uppercase text-sm mb-3">Get Involved</h2>
-              <h3 className="text-4xl md:text-5xl font-extrabold mb-4">Join the Lab.</h3>
-              <p className="text-[#A5B8B0] text-lg">Multiple ways to participate—as a student, client, or supporter.</p>
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Users className="w-8 h-8 text-[#115740]" />
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                Advisory Board
+              </h2>
             </div>
-            <a href="#join" className="mt-6 md:mt-0 inline-flex items-center text-white hover:text-[#A5B8B0] transition-colors font-medium border-b border-white hover:border-[#A5B8B0] pb-1">
-              Apply or submit a project <ArrowRight className="w-4 h-4 ml-2" />
-            </a>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Distinguished leaders guiding the Innovation Lab's strategic direction and growth
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-white/10 border border-white/20 rounded-sm overflow-hidden group hover:bg-white/15 transition-all">
-              <div className="h-64 relative overflow-hidden">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1599592187465-6dc742367282?q=80&w=1000"
-                  alt="Student team working"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#115740]/90 to-transparent" />
-                <div className="absolute bottom-6 left-6 flex items-center space-x-2">
-                  <Users className="w-6 h-6 text-white" />
-                  <h4 className="text-2xl font-bold">Student Positions</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Kathleen Powell",
+                role: "Chief Career Officer",
+                image: kathleenPowell
+              },
+              {
+                name: "Doug Schmidt",
+                role: "Dean of William & Mary's School of Computing, Data Sciences & Physics",
+                image: dougSchmidt
+              },
+              {
+                name: "Graham Henshaw",
+                role: "Assistant Provost",
+                image: grahamHenshaw
+              },
+              {
+                name: "Edward Aractingi",
+                role: "Chief Information Officer",
+                image: edPrimary
+              }
+            ].map((advisor, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white rounded-sm shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all group"
+              >
+                <div className="aspect-square overflow-hidden bg-slate-100">
+                  <img
+                    src={advisor.image}
+                    alt={advisor.name}
+                    className={`w-full h-full ${advisor.name === "Graham Henshaw" ? "object-contain" : "object-cover"} group-hover:scale-105 transition-transform duration-500`}
+                  />
                 </div>
-              </div>
-              <div className="p-8">
-                <p className="text-[#A5B8B0] mb-6">Join a semester-based project team working ~10 hours/week. Roles include Developer, Project Lead, UX Designer, and Business Analyst. Build your portfolio while earning academic credit.</p>
-                <button className="px-6 py-2.5 bg-[#F0B323] text-[#115740] font-bold rounded-sm hover:bg-yellow-400 transition-colors">
-                  Apply for Next Semester
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-8">
-              {[
-                {
-                  title: "Submit a Project",
-                  icon: Target,
-                  desc: "University departments: Have an operational challenge? Submit a project proposal and let student teams build a solution for you."
-                },
-                {
-                  title: "Fund the Lab",
-                  icon: Zap,
-                  desc: "Support the lab through endowments, grants, or project sponsorships. Help sustain this experiential learning opportunity."
-                },
-                {
-                  title: "Become a Mentor",
-                  icon: Users,
-                  desc: "Alumni and industry professionals: Share your expertise by mentoring student teams on real-world technology projects."
-                }
-              ].map((prog, i) => (
-                <div key={i} className="flex gap-6 p-6 rounded-sm border border-white/10 hover:border-white/30 transition-colors bg-white/5">
-                  <div className="flex-shrink-0 w-12 h-12 bg-white/20 text-white rounded-sm flex items-center justify-center">
-                    <prog.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">{prog.title}</h4>
-                    <p className="text-[#A5B8B0] leading-relaxed text-sm md:text-base">{prog.desc}</p>
-                  </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-lg font-bold text-slate-900 mb-1">{advisor.name}</h3>
+                  <p className="text-sm text-[#115740] font-medium">{advisor.role}</p>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -522,7 +586,76 @@ export function Home() {
         </div>
       </section>
 
-      {/* 9. CTA / Join */}
+      {/* 9. Get Involved / Join the Lab */}
+      <section id="programs" className="py-24 bg-[#115740] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div className="max-w-2xl">
+              <h2 className="text-[#F0B323] font-bold tracking-wider uppercase text-sm mb-3">Get Involved</h2>
+              <h3 className="text-4xl md:text-5xl font-extrabold mb-4">Join the Lab.</h3>
+              <p className="text-[#A5B8B0] text-lg">Multiple ways to participate—as a student, client, or supporter.</p>
+            </div>
+            <a href="#join" className="mt-6 md:mt-0 inline-flex items-center text-white hover:text-[#A5B8B0] transition-colors font-medium border-b border-white hover:border-[#A5B8B0] pb-1">
+              Apply or submit a project <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-white/10 border border-white/20 rounded-sm overflow-hidden group hover:bg-white/15 transition-all">
+              <div className="h-64 relative overflow-hidden">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1599592187465-6dc742367282?q=80&w=1000"
+                  alt="Student team working"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#115740]/90 to-transparent" />
+                <div className="absolute bottom-6 left-6 flex items-center space-x-2">
+                  <Users className="w-6 h-6 text-white" />
+                  <h4 className="text-2xl font-bold">Student Positions</h4>
+                </div>
+              </div>
+              <div className="p-8">
+                <p className="text-[#A5B8B0] mb-6">Join a semester-based project team working ~10 hours/week. Roles include Developer, Project Lead, UX Designer, and Business Analyst. Build your portfolio while earning academic credit.</p>
+                <button className="px-6 py-2.5 bg-[#F0B323] text-[#115740] font-bold rounded-sm hover:bg-yellow-400 transition-colors">
+                  Apply for Next Semester
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              {[
+                {
+                  title: "Submit a Project",
+                  icon: Target,
+                  desc: "University departments: Have an operational challenge? Submit a project proposal and let student teams build a solution for you."
+                },
+                {
+                  title: "Fund the Lab",
+                  icon: Zap,
+                  desc: "Support the lab through endowments, grants, or project sponsorships. Help sustain this experiential learning opportunity."
+                },
+                {
+                  title: "Become a Mentor",
+                  icon: Users,
+                  desc: "Alumni and industry professionals: Share your expertise by mentoring student teams on real-world technology projects."
+                }
+              ].map((prog, i) => (
+                <div key={i} className="flex gap-6 p-6 rounded-sm border border-white/10 hover:border-white/30 transition-colors bg-white/5">
+                  <div className="flex-shrink-0 w-12 h-12 bg-white/20 text-white rounded-sm flex items-center justify-center">
+                    <prog.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">{prog.title}</h4>
+                    <p className="text-[#A5B8B0] leading-relaxed text-sm md:text-base">{prog.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Contact Form / Get in Touch */}
       <section id="join" className="py-24 bg-[#F0B323] relative overflow-hidden">
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white opacity-10 rounded-sm blur-3xl mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-[#115740] opacity-10 rounded-sm blur-3xl mix-blend-overlay" />
