@@ -211,4 +211,21 @@ app.get("/make-server-e9910905/admin/contacts", async (c) => {
   }
 });
 
+// Delete contact submission - admin only
+app.delete("/make-server-e9910905/admin/contacts/:id", async (c) => {
+  try {
+    const user = await verifyAdmin(c.req.header('Authorization'));
+    if (!user) {
+      return c.json({ error: 'Unauthorized' }, 401);
+    }
+
+    const contactId = c.req.param('id');
+    await kv.del(contactId);
+    return c.json({ success: true });
+  } catch (error) {
+    console.log('Delete contact error:', error);
+    return c.json({ error: error.message }, 500);
+  }
+});
+
 Deno.serve(app.fetch);

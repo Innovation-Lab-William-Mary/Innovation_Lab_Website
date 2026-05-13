@@ -296,7 +296,7 @@ export function AdminDashboard() {
             <h2 className="text-2xl font-bold text-slate-900 mb-6">Contact Form Submissions</h2>
             <div className="space-y-4">
               {contacts.map((contact) => (
-                <div key={contact.id} className="bg-white shadow-sm rounded-sm p-6">
+                <div key={contact.id} className="bg-white shadow-sm rounded-sm p-6 border border-slate-200">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-3">
                       <Mail className="w-5 h-5 text-[#115740]" />
@@ -305,9 +305,34 @@ export function AdminDashboard() {
                         <p className="text-sm text-slate-600">{contact.email}</p>
                       </div>
                     </div>
-                    <span className="text-xs text-slate-500">
-                      {new Date(contact.submitted_at).toLocaleDateString()}
-                    </span>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-slate-500">
+                        {new Date(contact.submitted_at).toLocaleDateString()}
+                      </span>
+                      <button
+                        onClick={async () => {
+                          if (!confirm("Delete this contact submission?")) return;
+                          try {
+                            await fetch(
+                              `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/admin/contacts/${contact.id}`,
+                              {
+                                method: "DELETE",
+                                headers: {
+                                  "Authorization": `Bearer ${token}`
+                                }
+                              }
+                            );
+                            loadData();
+                          } catch (error) {
+                            console.error("Error deleting contact:", error);
+                          }
+                        }}
+                        className="text-red-600 hover:text-red-800 p-1"
+                        title="Delete submission"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                   <div className="mt-4">
                     <p className="text-sm font-medium text-slate-700">Interest: {contact.interest}</p>
