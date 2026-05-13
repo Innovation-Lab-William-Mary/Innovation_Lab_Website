@@ -1,3 +1,4 @@
+import image_image__4_ from '@/imports/image__4_.jpg'
 import { motion } from "motion/react";
 import { ArrowRight, ChevronRight, Zap, Target, Users, Wrench, Lightbulb, Code, Calendar } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -70,11 +71,11 @@ export function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
-              <div className="rounded-sm overflow-hidden shadow-2xl">
+              <div className="rounded-sm overflow-hidden">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1758270705172-07b53627dfcb?q=80&w=1200"
+                  src={image_image__4_}
                   alt="Students Collaborating"
-                  className="w-full h-full object-cover"
+                  className="w-11/12 h-11/12 object-c rounded-[4px]over m-auto rounded-[10px]"
                 />
               </div>
             </div>
@@ -180,7 +181,7 @@ export function Home() {
                 title: "Presidential Office Automation Suite",
                 category: "AI Workflow Tools",
                 team: "Fall 2025 Team",
-                desc: "AI-driven suite including Thank-You Email Automator, Inbox Triage, and Board Letter Assistant—saving presidential staff hours of administrative work weekly.",
+                desc: "AI-driven suite saving presidential staff hours of administrative work weekly.",
                 image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000",
                 link: "/projects/presidential-suite"
               },

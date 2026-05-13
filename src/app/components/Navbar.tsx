@@ -53,18 +53,18 @@ export function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.path.startsWith('#') ? link.path : undefined}
+                to={`/${link.path}`}
                 className={`text-sm font-medium transition-colors hover:text-[#F0B323] ${
                   isScrolled ? "text-slate-600" : "text-slate-200"
                 }`}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#join"
+            <Link
+              to="/#join"
               className={`px-4 py-2 rounded-sm text-sm font-bold transition-transform hover:scale-105 ${
                 isScrolled
                   ? "bg-[#115740] text-white hover:bg-[#115740]/90"
@@ -72,7 +72,7 @@ export function Navbar() {
               }`}
             >
               Get Involved
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -98,23 +98,23 @@ export function Navbar() {
         <div className="md:hidden bg-white shadow-xl absolute top-full left-0 w-full border-t border-gray-100">
           <div className="px-4 pt-2 pb-6 space-y-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.path.startsWith('#') ? link.path : undefined}
+                to={`/${link.path}`}
                 className="block px-3 py-3 rounded-sm text-base font-medium text-slate-800 hover:bg-slate-50 hover:text-[#115740]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <div className="pt-4">
-              <a
-                href="#join"
+              <Link
+                to="/#join"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center px-5 py-3 rounded-sm text-base font-bold bg-[#115740] text-white hover:bg-[#115740]/90"
               >
                 Get Involved
-              </a>
+              </Link>
             </div>
           </div>
         </div>
