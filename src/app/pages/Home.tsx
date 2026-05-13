@@ -4,8 +4,87 @@ import { ArrowRight, ChevronRight, Zap, Target, Users, Wrench, Lightbulb, Code, 
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { SuggestionWidget } from "../components/SuggestionWidget";
 import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+
+interface Project {
+  id: string;
+  title: string;
+  category: string;
+  team: string;
+  desc: string;
+  image: string;
+  link: string;
+  is_public: boolean;
+}
 
 export function Home() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/projects`,
+        {
+          headers: {
+            "Authorization": `Bearer ${publicAnonKey}`
+          }
+        }
+      );
+      const data = await response.json();
+      setProjects(data.projects || []);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error loading projects:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      interest: formData.get('interest'),
+      message: formData.get('message')
+    };
+
+    try {
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/contact`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${publicAnonKey}`
+          },
+          body: JSON.stringify(data)
+        }
+      );
+
+      if (response.ok) {
+        setFormSuccess(true);
+        (e.target as HTMLFormElement).reset();
+        setTimeout(() => setFormSuccess(false), 5000);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("There was an error submitting your form. Please try again.");
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col">
       <SuggestionWidget />
@@ -167,57 +246,13 @@ export function Home() {
             <p className="text-lg text-slate-600">Real solutions built by students to solve real university challenges.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "W&M BillTracker",
-                category: "Legislative Intelligence",
-                team: "Spring 2026 Team",
-                desc: "Legislative intelligence dashboard syncing with Virginia LIS to track, classify, and prioritize bills impacting William & Mary—automating what used to be manual research.",
-                image: "https://images.unsplash.com/photo-1624417963912-8532660d9de8?q=80&w=1000",
-                link: "/projects/bill-tracker"
-              },
-              {
-                title: "Presidential Office Automation Suite",
-                category: "AI Workflow Tools",
-                team: "Fall 2025 Team",
-                desc: "AI-driven suite saving presidential staff hours of administrative work weekly.",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000",
-                link: "/projects/presidential-suite"
-              },
-              {
-                title: "PDF Accessibility Reviewer",
-                category: "Compliance & Accessibility",
-                team: "Spring 2026 Team",
-                desc: "Web-based tool scanning PDFs for WCAG 2.1 AA compliance, providing automated alt-text remediation and batch processing for university documents.",
-                image: "https://images.unsplash.com/photo-1698047681432-006d2449c631?q=80&w=1000",
-                link: "/projects/pdf-accessibility"
-              },
-              {
-                title: "Campus Quest",
-                category: "Proposed Project",
-                team: "Seeking Team",
-                desc: "Gamification app turning campus exploration into an interactive experience—helping new students discover W&M while earning rewards and building community.",
-                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000",
-                link: "/projects/campus-quest"
-              },
-              {
-                title: "Sustainability Data Dashboard",
-                category: "Proposed Project",
-                team: "Seeking Team",
-                desc: "Real-time dashboard integrating energy usage, waste metrics, and carbon footprint data across campus to support W&M's sustainability goals.",
-                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000",
-                link: "/projects/sustainability-dashboard"
-              },
-              {
-                title: "IT Helpdesk AI Chatbot",
-                category: "Proposed Project",
-                team: "Seeking Team",
-                desc: "AI-powered chatbot to handle common IT support requests, reducing helpdesk ticket volume and providing 24/7 first-line support for students and staff.",
-                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1000",
-                link: "/projects/it-chatbot"
-              }
-            ].map((project, i) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-slate-600">Loading projects...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project, i) => (
               <Link key={i} to={project.link}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -244,8 +279,9 @@ export function Home() {
                   </div>
                 </motion.div>
               </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 text-center">
             <a href="#join" className="inline-flex items-center px-8 py-3 bg-[#F0B323] text-[#115740] font-bold rounded-sm hover:bg-yellow-400 transition-colors">
@@ -502,7 +538,13 @@ export function Home() {
             </p>
           </div>
 
-          <form className="bg-white rounded-sm p-8 shadow-lg space-y-6">
+          {formSuccess && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-sm mb-6">
+              Thank you! Your message has been received. We'll get back to you soon.
+            </div>
+          )}
+
+          <form onSubmit={handleContactSubmit} className="bg-white rounded-sm p-8 shadow-lg space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">
@@ -511,6 +553,7 @@ export function Home() {
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   placeholder="Your name"
                   className="w-full px-4 py-3 rounded-sm border border-slate-200 focus:ring-2 focus:ring-[#115740]/20 focus:border-[#115740] text-slate-900 placeholder:text-slate-400"
                   required
@@ -523,6 +566,7 @@ export function Home() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   placeholder="you@wm.edu"
                   className="w-full px-4 py-3 rounded-sm border border-slate-200 focus:ring-2 focus:ring-[#115740]/20 focus:border-[#115740] text-slate-900 placeholder:text-slate-400"
                   required
@@ -536,6 +580,7 @@ export function Home() {
               </label>
               <select
                 id="interest"
+                name="interest"
                 className="w-full px-4 py-3 rounded-sm border border-slate-200 focus:ring-2 focus:ring-[#115740]/20 focus:border-[#115740] text-slate-900"
                 required
               >
@@ -555,6 +600,7 @@ export function Home() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 rows={4}
                 placeholder="Tell us more about your interest or ask any questions..."
                 className="w-full px-4 py-3 rounded-sm border border-slate-200 focus:ring-2 focus:ring-[#115740]/20 focus:border-[#115740] text-slate-900 placeholder:text-slate-400 resize-none"
@@ -563,9 +609,10 @@ export function Home() {
 
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-[#115740] text-white font-bold rounded-sm hover:bg-[#0b3829] transition-colors shadow-lg hover:shadow-xl"
+              disabled={formSubmitting}
+              className="w-full px-8 py-4 bg-[#115740] text-white font-bold rounded-sm hover:bg-[#0b3829] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Submit
+              {formSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>

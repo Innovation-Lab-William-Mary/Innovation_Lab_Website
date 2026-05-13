@@ -9,6 +9,9 @@ import { MindfulU } from "./pages/projects/MindfulU";
 import { ResumeAnalyzer } from "./pages/projects/ResumeAnalyzer";
 import { PresidentialSuite } from "./pages/projects/PresidentialSuite";
 import { PDFAccessibility } from "./pages/projects/PDFAccessibility";
+import { AdminLogin } from "./pages/admin/Login";
+import { AdminDashboard } from "./pages/admin/Dashboard";
+import { AdminSetup } from "./pages/admin/Setup";
 
 export const router = createBrowserRouter([
   {
@@ -23,5 +26,17 @@ export const router = createBrowserRouter([
       { path: "projects/sustainability-dashboard", Component: EcoTrack },
       { path: "projects/it-chatbot", Component: MindfulU },
     ],
+  },
+  {
+    path: "/admin/setup",
+    Component: AdminSetup,
+  },
+  {
+    path: "/admin/login",
+    Component: AdminLogin,
+  },
+  {
+    path: "/admin/dashboard",
+    Component: AdminDashboard,
   },
 ]);
