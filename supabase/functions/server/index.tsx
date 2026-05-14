@@ -107,7 +107,9 @@ const verifyAdmin = async (authHeader: string | null) => {
 app.get("/make-server-e9910905/projects", async (c) => {
   try {
     const projects = await kv.getByPrefix("project:");
+    console.log('All projects:', projects.map(p => ({ id: p.id, title: p.title, is_public: p.is_public })));
     const publicProjects = projects.filter(p => p.is_public);
+    console.log('Public projects:', publicProjects.map(p => ({ id: p.id, title: p.title })));
     return c.json({ projects: publicProjects });
   } catch (error) {
     console.log('Get projects error:', error);
@@ -148,6 +150,7 @@ app.post("/make-server-e9910905/admin/projects", async (c) => {
       updated_at: new Date().toISOString()
     };
 
+    console.log('Saving project:', { id: projectData.id, title: projectData.title, is_public: projectData.is_public });
     await kv.set(projectId, projectData);
     return c.json({ success: true, project: projectData });
   } catch (error) {
