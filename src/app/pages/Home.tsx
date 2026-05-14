@@ -34,15 +34,27 @@ export function Home() {
 
   const loadProjects = async () => {
     try {
+      const isProduction = import.meta.env.VITE_ENVIRONMENT === 'production';
+      const endpoint = isProduction ? 'projects' : 'projects/all';
+
+      console.log('Environment:', import.meta.env.VITE_ENVIRONMENT);
+      console.log('Is Production:', isProduction);
+      console.log('Endpoint:', endpoint);
+
       const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/projects`,
+        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/${endpoint}`,
         {
           headers: {
             "Authorization": `Bearer ${publicAnonKey}`
           }
         }
       );
-      const data = await response.json();
+
+      console.log('Response status:', response.status);
+      const text = await response.text();
+      console.log('Response text:', text);
+
+      const data = JSON.parse(text);
       setProjects(data.projects || []);
       setLoading(false);
     } catch (error) {

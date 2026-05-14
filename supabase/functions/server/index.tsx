@@ -117,6 +117,18 @@ app.get("/make-server-e9910905/projects", async (c) => {
   }
 });
 
+// Get all projects (including private) - for development/preview only
+app.get("/make-server-e9910905/projects/all", async (c) => {
+  try {
+    const projects = await kv.getByPrefix("project:");
+    console.log('Dev mode - returning all projects');
+    return c.json({ projects });
+  } catch (error) {
+    console.log('Get all projects error:', error);
+    return c.json({ error: error.message }, 500);
+  }
+});
+
 // Get all projects (including private) - admin only
 app.get("/make-server-e9910905/admin/projects", async (c) => {
   try {
