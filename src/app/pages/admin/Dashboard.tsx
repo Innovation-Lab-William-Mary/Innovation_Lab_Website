@@ -95,12 +95,12 @@ export function AdminDashboard() {
     }
   };
 
-  const deleteProject = async (projectId: string) => {
+  const deleteProject = async (id: string) => {
     if (!confirm("Are you sure you want to delete this project?")) return;
 
     try {
       await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/admin/projects/${projectId}`,
+        `https://${projectId}.supabase.co/functions/v1/make-server-e9910905/admin/projects/${id}`,
         {
           method: "DELETE",
           headers: {

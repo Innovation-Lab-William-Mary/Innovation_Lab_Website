@@ -68,28 +68,6 @@ export function PresidentialSuite() {
                   className="w-full h-96 object-cover"
                 />
               </div>
-
-              <div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">Suite Components</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {[
-                    { icon: Mail, title: "Thank-You Email Automator", desc: "Generates personalized thank-you emails based on context and recipient" },
-                    { icon: Inbox, title: "Inbox Triage", desc: "AI categorization and prioritization of incoming emails" },
-                    { icon: FileText, title: "Board Letter Assistant", desc: "Drafts formal board correspondence from bullet points" },
-                    { icon: Sparkles, title: "Tone & Voice Matching", desc: "Maintains presidential voice across all generated content" }
-                  ].map((feature, i) => (
-                    <div key={i} className="flex items-start space-x-4 p-6 bg-slate-50">
-                      <div className="p-3 bg-[#115740]/10">
-                        <feature.icon className="w-6 h-6 text-[#115740]" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-slate-900 mb-1">{feature.title}</h3>
-                        <p className="text-sm text-slate-600">{feature.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
             <div className="space-y-8">
